@@ -13,9 +13,16 @@ const Login = (props) => {
 
 
   useEffect(() => {
-    setFormIsValid(
-      enteredEmail.includes('@') && enteredPassword.trim().length > 6
-    );
+    const identifier = setTimeout(() => { //checks for every 500 ms time
+      console.log("Checking form validity");
+      setFormIsValid(
+        enteredEmail.includes('@') && enteredPassword.trim().length > 6
+      );
+    }, 500);
+    return () => { //clean up function which resets timer everytime
+      console.log("Clean up");
+      clearTimeout(identifier);
+    };
   }, [enteredEmail, enteredPassword]);
 
   const emailChangeHandler = (event) => {
